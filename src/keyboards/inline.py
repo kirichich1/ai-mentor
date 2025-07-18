@@ -8,7 +8,10 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 def get_main_menu_keyboard():
     builder = InlineKeyboardBuilder()
     builder.row(
-        InlineKeyboardButton(text="🔍 Анализ анкеты", callback_data="analyze_profile")
+        InlineKeyboardButton(text="🔍 Анализ моей анкеты", callback_data="analyze_profile")
+    )
+    builder.row(
+        InlineKeyboardButton(text="👤 Анализ чужой анкеты", callback_data="analyze_other_profile")
     )
     builder.row(
         InlineKeyboardButton(text="✨ Создать анкету", callback_data="generate_profile")
