@@ -4,7 +4,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 
 from keyboards.inline import get_cancel_keyboard
-from prompts import PROFILE_ANALYSIS_PROMPT
+from prompts import PROFILE_ANALYSIS_PROMPT, PROFILE_GENERATOR_PROMPT
 from utils.ai_api import split_text, get_ai_response
 from utils.states import AnalysisStates
 from utils.telegram_helpers import safe_send_message  # Добавляем импорт
@@ -52,3 +52,34 @@ async def process_profile(message: Message, state: FSMContext):
             else:
                 await safe_send_message(message, chunk)
             await asyncio.sleep(0.5)  # Небольшая задержка между сообщениями
+
+
+@router.callback_query(F.data == "generate_profile")
+async def start_profile_generation(callback: CallbackQuery, state: FSMContext):
+    await state.set_state(AnalysisStates.waiting_for_user_info)
+    await callback.message.edit_text(
+        "✨ Отлично! Расскажи о себе в свободной форме:\n"
+        "- Возраст, род занятий\n"
+        "- Интересы/хобби\n"
+        "- Что ищешь в отношениях?\n"
+        "- Любые детали, которые хочешь отразить\n\n"
+        "Я создам анкету, которая выделит тебя из толпы!",
+        reply_markup=get_cancel_keyboard()
+    )
+    await callback.answer()
+
+@router.message(AnalysisStates.waiting_for_user_info)
+async def generate_profile(message: Message, state: FSMContext):
+    await state.clear()
+    
+    thinking_msg = await message.answer("Создаю твою идеальную анкету... ✨")
+    user_info = message.text
+    prompt = PROFILE_GENERATOR_PROMPT.format(user_info=user_info)
+    
+    ai_response = await get_ai_response(prompt)
+    await thinking_msg.delete()
+    
+    if "Ошибка" in ai_response:
+        await message.answer("🚫 Не удалось создать анкету. Попробуй описать себя подробнее.")
+    else:
+        await safe_send_message(message, ai_response, reply_markup=get_cancel_keyboard())

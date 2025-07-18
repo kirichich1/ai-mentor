@@ -8,7 +8,7 @@ from aiogram.enums import ParseMode
 
 # Импортируем конфигурацию и обработчики
 from config import BOT_TOKEN, PROXY_URL
-from handlers import common, profile_analyzer, chat_analyzer
+from handlers import common, profile_analyzer, chat_analyzer, sos_handler
 
 async def main():
     # Настройка логирования
@@ -35,6 +35,7 @@ async def main():
     dp.include_router(common.router)
     dp.include_router(profile_analyzer.router)
     dp.include_router(chat_analyzer.router)
+    dp.include_router(sos_handler.router)  # Добавляем новый роутер
 
     # Удаление вебхука перед запуском (на случай, если он был установлен)
     await bot.delete_webhook(drop_pending_updates=True)

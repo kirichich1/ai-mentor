@@ -11,13 +11,32 @@ def get_main_menu_keyboard():
         InlineKeyboardButton(text="🔍 Анализ анкеты", callback_data="analyze_profile")
     )
     builder.row(
+        InlineKeyboardButton(text="✨ Создать анкету", callback_data="generate_profile")
+    )
+    builder.row(
         InlineKeyboardButton(text="💬 Анализ переписки", callback_data="analyze_chat")
     )
     builder.row(
-        InlineKeyboardButton(text="💌 Первое сообщение", callback_data="generate_first_message")  # Новая кнопка
+        InlineKeyboardButton(text="💌 Первое сообщение", callback_data="generate_first_message")
+    )
+    builder.row(
+        InlineKeyboardButton(text="🆘 Как отпустить", callback_data="sos_let_go")
     )
     builder.row(
         InlineKeyboardButton(text="💡 Помощь и советы", callback_data="help_info")
+    )
+    return builder.as_markup()
+
+
+def get_sos_options_keyboard():
+    builder = InlineKeyboardBuilder()
+    builder.row(
+        InlineKeyboardButton(text="Вежливый вариант", callback_data="sos_quick_polite"),
+        InlineKeyboardButton(text="Прямой вариант", callback_data="sos_quick_direct")
+    )
+    builder.row(
+        InlineKeyboardButton(text="Простой вариант", callback_data="sos_quick_simple"),
+        InlineKeyboardButton(text="◀️ Назад", callback_data="cancel_action")
     )
     return builder.as_markup()
 
