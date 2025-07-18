@@ -4,7 +4,7 @@ import logging
 from aiocache import cached
 
 
-from src.config import OPENROUTER_API_KEY, OPENROUTER_API_URL, MODEL_NAME, SITE_NAME
+from config import OPENROUTER_API_KEY, OPENROUTER_API_URL, MODEL_NAME, SITE_NAME
 
 
 # Настройка кеша: 200 записей, время жизни - 1 час (3600 секунд)

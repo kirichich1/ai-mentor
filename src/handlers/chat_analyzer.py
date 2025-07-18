@@ -5,10 +5,10 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 from aiogram.exceptions import TelegramBadRequest
 
-from src.keyboards.inline import get_cancel_keyboard
-from src.prompts import CHAT_ANALYSIS_PROMPT
-from src.utils.ai_api import split_text, get_ai_response
-from src.utils.states import AnalysisStates
+from keyboards.inline import get_cancel_keyboard
+from prompts import CHAT_ANALYSIS_PROMPT
+from utils.ai_api import split_text, get_ai_response
+from utils.states import AnalysisStates
 
 router = Router()
 

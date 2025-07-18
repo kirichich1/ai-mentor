@@ -3,11 +3,11 @@ from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
 
-from src.keyboards.inline import get_cancel_keyboard
-from src.prompts import PROFILE_ANALYSIS_PROMPT
-from src.utils.ai_api import split_text, get_ai_response
-from src.utils.states import AnalysisStates
-from src.utils.telegram_helpers import safe_send_message  # Добавляем импорт
+from keyboards.inline import get_cancel_keyboard
+from prompts import PROFILE_ANALYSIS_PROMPT
+from utils.ai_api import split_text, get_ai_response
+from utils.states import AnalysisStates
+from utils.telegram_helpers import safe_send_message  # Добавляем импорт
 
 router = Router()
 

@@ -5,7 +5,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 
-from src.keyboards.inline import get_main_menu_keyboard
+from keyboards.inline import get_main_menu_keyboard
 
 router = Router()
 
