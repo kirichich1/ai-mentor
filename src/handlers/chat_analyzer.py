@@ -198,7 +198,7 @@ async def generate_style_message(callback: CallbackQuery, state: FSMContext):
         "romance": "Романтика ❤️",
         "flirt": "Флирт 😏",
         "humor": "Юмор 😄",
-        "tease": "Игровой подъёб 😈",
+        "tease": "Игровой подкол 😈",
         "sincere": "Искренность ✨",
         "support": "Поддержка 🤗"
     }.get(style_key, "выбранному стилю")

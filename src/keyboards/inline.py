@@ -66,7 +66,7 @@ def get_style_keyboard():
     builder.row(InlineKeyboardButton(text="❤️ Романтика", callback_data="style_romance"))
     builder.row(InlineKeyboardButton(text="😏 Флирт", callback_data="style_flirt"))
     builder.row(InlineKeyboardButton(text="😄 Юмор", callback_data="style_humor"))
-    builder.row(InlineKeyboardButton(text="😈 Игровой подъёб", callback_data="style_tease"))
+    builder.row(InlineKeyboardButton(text="😈 Игровой подкол", callback_data="style_tease"))
     builder.row(InlineKeyboardButton(text="✨ Искренность", callback_data="style_sincere"))
     builder.row(InlineKeyboardButton(text="🤗 Поддержка", callback_data="style_support"))
     builder.row(InlineKeyboardButton(text="◀️ Назад", callback_data="cancel_action"))
