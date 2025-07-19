@@ -9,3 +9,5 @@ class AnalysisStates(StatesGroup):
     waiting_for_other_profile = State()
     waiting_for_rescue_chat = State()
     waiting_for_message_interpretation = State()
+    waiting_for_style_context = State()
+    waiting_for_style_choice = State()

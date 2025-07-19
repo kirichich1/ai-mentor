@@ -32,6 +32,9 @@ def get_main_menu_keyboard():
         InlineKeyboardButton(text="💬 Интерпретация реплики", callback_data="interpret_message")
     )
     builder.row(
+        InlineKeyboardButton(text="🎭 Генератор сообщения", callback_data="generate_style_message")  # Новая кнопка
+    )
+    builder.row(
         InlineKeyboardButton(text="💡 Помощь и советы", callback_data="help_info")
     )
     return builder.as_markup()
@@ -55,4 +58,16 @@ def get_cancel_keyboard():
     builder.row(
         InlineKeyboardButton(text="◀️ Назад в меню", callback_data="cancel_action")
     )
+    return builder.as_markup()
+
+
+def get_style_keyboard():
+    builder = InlineKeyboardBuilder()
+    builder.row(InlineKeyboardButton(text="❤️ Романтика", callback_data="style_romance"))
+    builder.row(InlineKeyboardButton(text="😏 Флирт", callback_data="style_flirt"))
+    builder.row(InlineKeyboardButton(text="😄 Юмор", callback_data="style_humor"))
+    builder.row(InlineKeyboardButton(text="😈 Игровой подъёб", callback_data="style_tease"))
+    builder.row(InlineKeyboardButton(text="✨ Искренность", callback_data="style_sincere"))
+    builder.row(InlineKeyboardButton(text="🤗 Поддержка", callback_data="style_support"))
+    builder.row(InlineKeyboardButton(text="◀️ Назад", callback_data="cancel_action"))
     return builder.as_markup()
