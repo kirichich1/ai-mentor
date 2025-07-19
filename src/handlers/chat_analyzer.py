@@ -6,7 +6,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.exceptions import TelegramBadRequest
 
 from keyboards.inline import get_cancel_keyboard
-from prompts import CHAT_ANALYSIS_PROMPT, FIRST_MESSAGE_PROMPT
+from prompts import CHAT_ANALYSIS_PROMPT, FIRST_MESSAGE_PROMPT, CHAT_RESCUE_PROMPT, MESSAGE_INTERPRETATION_PROMPT
 from utils.ai_api import split_text, get_ai_response
 from utils.states import AnalysisStates
 
@@ -110,3 +110,59 @@ async def generate_first_message(message: Message, state: FSMContext):
             else:
                 await safe_send_message(message, chunk)
             await asyncio.sleep(0.5)
+
+
+@router.callback_query(F.data == "chat_rescue")
+async def start_chat_rescue(callback: CallbackQuery, state: FSMContext):
+    await state.set_state(AnalysisStates.waiting_for_rescue_chat)
+    await callback.message.edit_text(
+        "🆘 Пришли последние сообщения из диалога (твои и собеседника, 3-5 реплик). "
+        "Я дам конкретные инструкции, как спасти ситуацию!",
+        reply_markup=get_cancel_keyboard()
+    )
+    await callback.answer()
+
+# Обработчик для срочной реабилитации
+@router.message(AnalysisStates.waiting_for_rescue_chat)
+async def process_chat_rescue(message: Message, state: FSMContext):
+    await state.clear()
+    
+    thinking_msg = await message.answer("Анализирую диалог для экстренной помощи...")
+    chat_history = message.text
+    prompt = CHAT_RESCUE_PROMPT.format(chat_history=chat_history)
+    
+    ai_response = await get_ai_response(prompt)
+    await thinking_msg.delete()
+    
+    if "Ошибка" in ai_response:
+        await message.answer("🚫 Не удалось проанализировать. Убедись, что прислал достаточно контекста.")
+    else:
+        await safe_send_message(message, ai_response, reply_markup=get_cancel_keyboard())
+
+
+@router.callback_query(F.data == "interpret_message")
+async def start_message_interpretation(callback: CallbackQuery, state: FSMContext):
+    await state.set_state(AnalysisStates.waiting_for_message_interpretation)
+    await callback.message.edit_text(
+        "💬 Пришли одно сообщение собеседника, которое хочешь расшифровать. "
+        "Я разберу скрытые смыслы, эмоции и дам рекомендации!",
+        reply_markup=get_cancel_keyboard()
+    )
+    await callback.answer()
+
+
+@router.message(AnalysisStates.waiting_for_message_interpretation)
+async def process_message_interpretation(message: Message, state: FSMContext):
+    await state.clear()
+    
+    thinking_msg = await message.answer("Анализирую скрытые смыслы...")
+    user_message = message.text
+    prompt = MESSAGE_INTERPRETATION_PROMPT.format(message=user_message)
+    
+    ai_response = await get_ai_response(prompt)
+    await thinking_msg.delete()
+    
+    if "Ошибка" in ai_response:
+        await message.answer("🚫 Не удалось расшифровать сообщение. Попробуй другое?")
+    else:
+        await safe_send_message(message, ai_response, reply_markup=get_cancel_keyboard())

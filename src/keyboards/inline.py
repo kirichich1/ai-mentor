@@ -26,6 +26,12 @@ def get_main_menu_keyboard():
         InlineKeyboardButton(text="🆘 Как отпустить", callback_data="sos_let_go")
     )
     builder.row(
+        InlineKeyboardButton(text="🆘 Срочная реабилитация", callback_data="chat_rescue")
+    )
+    builder.row(
+        InlineKeyboardButton(text="💬 Интерпретация реплики", callback_data="interpret_message")
+    )
+    builder.row(
         InlineKeyboardButton(text="💡 Помощь и советы", callback_data="help_info")
     )
     return builder.as_markup()
